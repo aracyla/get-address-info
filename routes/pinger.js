@@ -36,9 +36,25 @@ var getHostnameInformation = function (hostname){
 }
 
 
-var App = module.exports = {};
+var pinger_exe = function (address, res, fcb_EndResponse){
+    res.writeHead(200, {"Content-type": 'application/json'});
 
-App.getIpInfo = getHostnameInformation;
-App.getHosnameFromIp = ipToHostnames;
-App.getIpFromHostname = hostnameToIp;
-App.isHostAlive = pinger;
+//CHECK IF IS ALIVE
+    isHostAlive((address.ip)?address.ip:address.hostname, function(isAlive){
+        if(isAlive){
+            //FIXME:add a function to mount and handle all response jsons
+            res.write(JSON.stringify({isAlive: true}));
+            res.end();
+        }
+        else{
+            res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hoshostname:false, "ip": address.ip?address.ip:false}));
+            res.end();
+        }
+
+    });
+}
+
+
+var Pinger = module.exports = {};
+
+Pinger.mainApp = pinger_exe;
