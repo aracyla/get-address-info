@@ -35,7 +35,9 @@ var getHostnameInformation = function (hostname){
     });
 }
 
-
+/*
+address = {ip: value, hostname: value}
+*/
 var pinger_exe = function (address, res, fcb_EndResponse){
     res.writeHead(200, {"Content-type": 'application/json'});
 
@@ -50,7 +52,6 @@ var pinger_exe = function (address, res, fcb_EndResponse){
             res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hoshostname:false, "ip": address.ip?address.ip:false}));
             res.end();
         }
-
     });
 }
 

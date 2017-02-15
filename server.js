@@ -5,7 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var qs = require('querystring');
 
-var pinger = require('./routes/pinger');
+//var pinger = require('./routes/pinger');
 
 var app = connect();
 
@@ -29,7 +29,7 @@ var server = function (req, res){
                 });
                 req.on("end", function(){
                     var post = qs.parse(body);
-                    pinger_exe(post, res);
+                    //TODO: call mainApp inger_exe(post, res);
                 });
 
             }
@@ -76,26 +76,7 @@ app.use('/', server);
 http.createServer(app).listen(3000);
 console.log('Server is running...');
 
+
 //FIXME:check if address exists
-function app_exe(address, res, fcb_EndResponse){
-    res.writeHead(200, {"Content-type": 'application/json'});
-
-//CHECK IF IS ALIVE
-    app_js.isHostAlive((address.ip)?address.ip:address.hostname, function(isAlive){
-        if(isAlive){
-            //FIXME:add a function to mount and handle all response jsons
-            res.write(JSON.stringify({isAlive: true}));
-            res.end();
-        }
-        else{
-            res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hoshostname:false, "ip": address.ip?address.ip:false}));
-            res.end();
-        }
-
-    });
-
-
-}
-
 //TODO:add this code to appjs module
 //TODO:organize route and public folders
