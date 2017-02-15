@@ -4,7 +4,7 @@ const dns = require('dns');
 
 
 
-var pinger = function (host, f_cb){
+var isHostAlive = function (host, f_cb){
     ping.sys.probe(host, function(isAlive, err){
         f_cb(isAlive);
     });
@@ -38,21 +38,48 @@ var getHostnameInformation = function (hostname){
 /*
 address = {ip: value, hostname: value}
 */
-var pinger_exe = function (address, res, fcb_EndResponse){
+var pinger_exe = function (address, res){
     res.writeHead(200, {"Content-type": 'application/json'});
 
 //CHECK IF IS ALIVE
     isHostAlive((address.ip)?address.ip:address.hostname, function(isAlive){
         if(isAlive){
-            //FIXME:add a function to mount and handle all response jsons
-            res.write(JSON.stringify({isAlive: true}));
-            res.end();
+            //if alive mount jsonresponse
+            mount_JSONResponse(address, res);
         }
         else{
             res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hoshostname:false, "ip": address.ip?address.ip:false}));
             res.end();
         }
     });
+}
+
+function mount_JSONResponse(address, res){
+
+    var JSON_response = {};
+    JSON_response["isAlive"] = true;
+    //res.write(JSON.stringify({isAlive: true}));
+    if(address.ip){
+        JSON_response["ip"] = address.ip;
+        ipToHostnames(address.ip, function(hostnames){
+            JSON_response["reverse_ip"] = hostnames;
+
+            res.end(JSON.stringify(JSON_response));
+        });
+    }else{
+
+        hostnameToIp(address.hostname, function(ip, family){
+            JSON_response["ip"] = ip;
+            ipToHostnames(ip, function(hostnames){
+                console.log(hostnames);
+                JSON_response["reverse_Ip"] = hostnames;
+                res.end(JSON.stringify(JSON_response));
+            });
+
+
+        });
+    }
+
 }
 
 

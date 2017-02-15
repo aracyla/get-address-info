@@ -5,7 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var qs = require('querystring');
 
-//var pinger = require('./routes/pinger');
+var Pinger = require('./routes/pinger');
 
 var app = connect();
 
@@ -18,7 +18,7 @@ var server = function (req, res){
         break;
 
         case "/":
-            HTTP_SendFile(res, req, "routes/pinger");
+            HTTP_SendFile(res, req, "public/pinger");
         break;
 
         case "/pinger":
@@ -29,7 +29,7 @@ var server = function (req, res){
                 });
                 req.on("end", function(){
                     var post = qs.parse(body);
-                    //TODO: call mainApp inger_exe(post, res);
+                    Pinger.mainApp(post, res);
                 });
 
             }
@@ -37,16 +37,10 @@ var server = function (req, res){
 
         //invalid routes will fall here and be ignored by sendfile function
         default:
-            HTTP_SendFile(res, req, "routes/pinger");
+            HTTP_SendFile(res, req, "public/pinger");
         break;
 
     }
-
-    //page template
-
-    //if(path.extname(req.url) != "ico")
-
-
 }
 
 function HTTP_SendFile(res, req, basename){
@@ -57,12 +51,12 @@ function HTTP_SendFile(res, req, basename){
     switch (path.extname(req.url)) {
             case ".css":
                 res.writeHead(200, {"Content-type": "text/css"});
-                fs.createReadStream("app.css").pipe(res);
+                fs.createReadStream(filepath).pipe(res);
             break;
 
             default:
                 res.writeHead(200, {"Content-type": "text/html"});
-                fs.createReadStream("app.html").pipe(res);
+                fs.createReadStream(filepath).pipe(res);
 
             break;
 
