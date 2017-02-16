@@ -82,7 +82,7 @@ function mount_JSONResponse(address, res){
             var JSON_georesponse = {};
 
             JSON_response["reverse_ip"] = hostnames;
-            console.log(JSON_response);
+            //console.log(JSON_response);
             var geo = getIpInformation(address.ip);
 
             JSON_georesponse["country"] = geo.country;
@@ -106,7 +106,7 @@ function mount_JSONResponse(address, res){
                 var JSON_georesponse = {};
 
                 JSON_response["reverse_ip"] = hostnames;
-                console.log(JSON_response);
+                //console.log(JSON_response);
                 var geo = getIpInformation(ip);
                 JSON_georesponse["country"] = geo.country;
                 JSON_georesponse["state"] = geo.region;
