@@ -1,5 +1,5 @@
 var geoip = require('geoip-lite');
-const dns = require('dns');
+var dns = require('dns');
 var tcpp = require('tcp-ping');
 
 
@@ -15,6 +15,7 @@ var isHostAlive = function (host_ip, f_cb){
 var ipToHostnames = function (address, f_cb){
     dns.reverse(address, function(err, hostnames){
         if(!err){
+            console.log(err);
             f_cb(hostnames);
         }else{
             console.log(err);
