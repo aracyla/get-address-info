@@ -82,7 +82,7 @@ function mount_JSONResponse(address, res){
             var JSON_georesponse = {};
 
             JSON_response["reverse_ip"] = hostnames;
-
+            console.log(JSON_response);
             var geo = getIpInformation(address.ip);
 
             JSON_georesponse["country"] = geo.country;
@@ -91,8 +91,11 @@ function mount_JSONResponse(address, res){
             JSON_georesponse["lat"] = geo.ll[0];
             JSON_georesponse["lon"] = geo.ll[1];
 
+            console.log("reverse_ip:"+hostnames);
+            console.log("ip:"+address.ip);
+
             JSON_response["geo"] = JSON_georesponse;
-            console.log(JSON_response);
+
             res.end(JSON.stringify(JSON_response));
         });
     }else{
@@ -103,7 +106,7 @@ function mount_JSONResponse(address, res){
                 var JSON_georesponse = {};
 
                 JSON_response["reverse_ip"] = hostnames;
-
+                console.log(JSON_response);
                 var geo = getIpInformation(ip);
                 JSON_georesponse["country"] = geo.country;
                 JSON_georesponse["state"] = geo.region;
@@ -111,8 +114,11 @@ function mount_JSONResponse(address, res){
                 JSON_georesponse["lat"] = geo.ll[0];
                 JSON_georesponse["lon"] = geo.ll[1];
 
+                console.log("reverse_ip:"+hostnames);
+                console.log("ip:"+ip);
+
                 JSON_response["geo"] = JSON_georesponse;
-                console.log(JSON_response);
+
                 res.end(JSON.stringify(JSON_response));
             });
 
