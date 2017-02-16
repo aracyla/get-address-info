@@ -10,11 +10,8 @@ var Pinger = require('./routes/pinger');
 var app = connect();
 
 var server = function (req, res){
-    console.log(req.url);
     switch (req.url) {
         case "/favicon.ico":
-            console.log("favicon request...");
-            //res.end();
         break;
 
         case "/":
@@ -22,6 +19,7 @@ var server = function (req, res){
         break;
 
         case "/pinger":
+            console.log("=>pinger route");
             if(req.method == 'POST'){
                 var body = "";
                 req.on('data', function (data) {

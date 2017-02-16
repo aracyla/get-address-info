@@ -1,6 +1,5 @@
 {
   "name": "pingerjs",
-  "version": "1.0.0",
   "description": "Simple tracerout app",
   "main": "app.js",
   "scripts": {

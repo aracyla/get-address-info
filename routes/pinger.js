@@ -34,7 +34,7 @@ address = {ip: value, hostname: value}
 */
 var pinger_exe = function (address, res){
     res.writeHead(200, {"Content-type": 'application/json'});
-
+    console.log("=>pinger mainApp");
 //CHECK IF IS ALIVE
     isHostAlive((address.ip)?address.ip:address.hostname, function(isAlive){
         if(isAlive){
