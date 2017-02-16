@@ -38,7 +38,9 @@ var pinger_exe = function (address, res){
     console.log("=>Ip: "+address.ip);
     console.log("=>Hostname: "+address.hostname)
 //CHECK IF IS ALIVE
+
     isHostAlive((address.ip)?address.ip:address.hostname, function(isAlive){
+        console.log("isAlive: "+isAlive);
         if(isAlive){
             //if alive mount jsonresponse
             mount_JSONResponse(address, res);
@@ -54,7 +56,6 @@ function mount_JSONResponse(address, res){
 
     var JSON_response = {};
     JSON_response["isAlive"] = true;
-    console.log("isAlive: "+JSON_response.isAlive);
     //res.write(JSON.stringify({isAlive: true}));
     if(address.ip){
         JSON_response["ip"] = address.ip;
