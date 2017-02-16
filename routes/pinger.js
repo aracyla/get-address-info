@@ -26,13 +26,7 @@ var hostnameToIp = function (hostname, f_cb){
 
 var getIpInformation = function (address){
     var geo = geoip.lookup(address);
-    console.log(geo);
-}
-
-var getHostnameInformation = function (hostname){
-    hostnameToIp(hostname, function(address, family){
-        getIpInformation(address);
-    });
+    return geo;
 }
 
 /*
@@ -62,7 +56,19 @@ function mount_JSONResponse(address, res){
     if(address.ip){
         JSON_response["ip"] = address.ip;
         ipToHostnames(address.ip, function(hostnames){
+            var JSON_georesponse = {};
+
             JSON_response["reverse_ip"] = hostnames;
+
+            var geo = getIpInformation(address.ip);
+            
+            JSON_georesponse["country"] = geo.country;
+            JSON_georesponse["state"] = geo.region;
+            JSON_georesponse["city"] = geo.city;
+            JSON_georesponse["lat"] = geo.ll[0];
+            JSON_georesponse["lon"] = geo.ll[1];
+
+            JSON_response["geo"] = JSON_georesponse;
 
             res.end(JSON.stringify(JSON_response));
         });
@@ -71,8 +77,19 @@ function mount_JSONResponse(address, res){
         hostnameToIp(address.hostname, function(ip, family){
             JSON_response["ip"] = ip;
             ipToHostnames(ip, function(hostnames){
-                console.log(hostnames);
-                JSON_response["reverse_Ip"] = hostnames;
+                var JSON_georesponse = {};
+
+                JSON_response["reverse_ip"] = hostnames;
+
+                var geo = getIpInformation(ip);
+                JSON_georesponse["country"] = geo.country;
+                JSON_georesponse["state"] = geo.region;
+                JSON_georesponse["city"] = geo.city;
+                JSON_georesponse["lat"] = geo.ll[0];
+                JSON_georesponse["lon"] = geo.ll[1];
+
+                JSON_response["geo"] = JSON_georesponse;
+
                 res.end(JSON.stringify(JSON_response));
             });
 

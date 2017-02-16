@@ -6,7 +6,7 @@ body {
 /* app area */
 div .app_area {
     text-align: center;
-    padding-top: 140px;
+    padding-top: 60px;
 }
 #hostname,
 #ip {
@@ -19,12 +19,30 @@ div .app_area {
     background-color: #404040;
     color: white;
 }
+
+/*screen fixes */
 @media screen and (max-width: 800px) {
+
     #ip{
         width: 80%;
     }
+
+    #hostname{
+        width: 80%;
+    }
+
+    #response_area{
+        width: 80%;
+    }
+
+    #ping_button {
+        width: 40%;
+    }
 }
 
+@media screen and (max-width: 800px) {
+}
+/* END screen fixes */
 
 
 #ping_button {
@@ -53,13 +71,56 @@ div .app_area {
 /* End app area */
 
 
+/* Response area */
+.response_area{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+    padding: 0px;
+    padding-top: 40px;
+    width: 50%;
+    border-top: 1px solid #D82645;
+    box-sizing: border-box;
+}
+
+.hidden_layer{
+    display: none;
+}
+
+.response_area_txt {
+    float:left;
+    width: 50%;
+    height: 280px;
+    text-align: center;
+    padding-top: 40px;
+    padding-right: 40px;
+    box-sizing: border-box;
+}
+
+.response_font{
+    font-size: 120%;
+    color: #D82645;
+}
+
+.response_online{
+    color: #279942;
+}
+
+.map_style{
+    float: left;
+    box-sizing: border-box;
+    width: 50%;
+    height: 280px;
+}
+/* End response area */
+
 /* navigation menu */
 .app_navigation {
     background-color: #D82645;
     margin-top: 0px;
     text-align: center;
     border-bottom: 5px solid #D82672;
-    box-sizing: border-box;
+
 
 }
 
@@ -109,6 +170,26 @@ input:-webkit-autofill:active {
     -webkit-transition-delay: 9999s;
 }
 
+.clear_float:before,
+.clear_float:after {
+	content: "";
+	display: table;
+}
+.clear_float:after {
+    clear: both;
+}
+.clear_float{
+    zoom:1;
+}
+
+.fix {
+    clear: both;
+}
+
+.clear_float:after {
+	clear: both;
+}
+
 /*Bounce animation */
 @keyframes fadeBounce {
     0% {
@@ -138,5 +219,10 @@ input:-webkit-autofill:active {
         transform: translateY(0%);
     }
 }
+/*end Bounce animation*/
 
-/*end Bounce animation
+
+/*loading animation*/
+@keyframes loadingAnimation {
+}
+/*end loading animation*/

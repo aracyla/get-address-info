@@ -3,7 +3,6 @@
 <head>
     <title>Ping4U</title>
     <link rel="stylesheet" type="text/css" href="pinger.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -33,13 +32,26 @@
                 </form>
             </div>
         </div>
+
+        <div class="response_area clear_float">
+            <div class="hidden_layer">
+                <div class="response_area_txt" id="response_area_txt"></div>
+                <div id="map" class="map_style"></div>
+
+                </div>
+            </div>
+        </div>
+        <!---->
     </div>
 </div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv2R8JnxDrhLXHs_-KKL__KQj0j5IOEUE"
+    async defer></script>
 
 <script>
-$('#form_pinger').on('submit', function(event){
+$($('#form_pinger').on('submit', function(event){
     event.preventDefault();
     var address;
     if($('#ip').val() != "")
@@ -53,13 +65,50 @@ $('#form_pinger').on('submit', function(event){
         contentType: 'application/json',
         data: (address),
         success: function(response){
+            var data;
             console.log(response);
+            var data = "";
+            if(response.isAlive){
+                data = '<p><span class="response_font"><b>Status</b>: <span class="response_online">Online</span></span><br />';
+                data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br />';
+                data = data+'<span class="response_font"><b>Reverse ip</b>: '+response.reverse_ip[0]+'</span></p><hr />';
+                data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
+                data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
+
+                $('#map').show();
+                initMap(response.geo.lat, response.geo.lon, response.geo.city);
+            }
+            else{
+                data = '<p><span class="response_font"><b>Status</b>: Offline<br />Address not found</span>';
+            }
+
+            $('#response_area_txt').html(data);
+            $('.hidden_layer').show();
         }
     });
-});
-//TODO: add load script to end of the page
-//TODO: add loading signal to the page
+}));
+
 </script>
+<script>
+    function initMap(lat, lon, city) {
+        var opts = {
+            center: {lat: lat, lng: lon},
+            scrollwheel: false,
+            zoom: 10
+        };
+        var map = new google.maps.Map(document.getElementById("map"),opts);
+        var marker = new google.maps.Marker({
+            position: {lat: lat, lng: lon},
+            map: map,
+            title: city
+        });
+
+
+    }
+
+</script>
+
+
 </body>
 
 </html>
