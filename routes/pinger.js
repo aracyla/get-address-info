@@ -14,8 +14,11 @@ var isHostAlive = function (host_ip, f_cb){
 
 var ipToHostnames = function (address, f_cb){
     dns.reverse(address, function(err, hostnames){
-        if(!err)
+        if(!err){
             f_cb(hostnames);
+        }else{
+            console.log(err);
+        }
     });
 }
 
@@ -110,6 +113,7 @@ function mount_JSONResponse(address, res){
 
                 console.log("------JSON_reverse_ip: "+hostnames);
                 JSON_response["reverse_ip"] = hostnames;
+
                 //console.log(JSON_response);
                 var geo = getIpInformation(ip);
                 JSON_georesponse["country"] = geo.country;
