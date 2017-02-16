@@ -6,9 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-      "ping": "*",
-      "geoip-lite": "*",
-      "connect": "*"
+      "ping": "0.2.1",
+      "geoip-lite": "1.1.9",
+      "connect": "3.5.1 "
   },
   "author": "aracytopterm",
   "license": "ISC"
