@@ -5,7 +5,7 @@ const dns = require('dns');
 
 
 var isHostAlive = function (host, f_cb){
-    console.long(host);
+    console.log(host);
     ping.sys.probe(host, function(isAlive, err){
         f_cb(isAlive);
     });
