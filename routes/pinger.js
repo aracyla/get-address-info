@@ -1,13 +1,16 @@
-ping = require('ping');
 var geoip = require('geoip-lite');
 const dns = require('dns');
+var tcpp = require('tcp-ping');
 
 
-
-var isHostAlive = function (host, f_cb){
-    console.log(host);
-    ping.sys.probe(host, function(isAlive, err){
-        f_cb(isAlive);
+var isHostAlive = function (host_ip, f_cb){
+    console.log(host_ip);
+    tcpp.ping({ address: host_ip, attempts: 1, timeout: 4000 }, function(err, data) {
+        console.log(data);
+        if(data.max)
+            f_cb(true);
+        else
+            f_cb(false);
     });
 }
 
@@ -39,18 +42,33 @@ var pinger_exe = function (address, res){
     console.log("=>Ip: "+address.ip);
     console.log("=>Hostname: "+address.hostname);
 //CHECK IF IS ALIVE
-
-    isHostAlive((address.ip)?address.ip:address.hostname, function(isAlive){
-        console.log("isAlive: "+isAlive);
-        if(isAlive){
-            //if alive mount jsonresponse
-            mount_JSONResponse(address, res);
-        }
-        else{
-            res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hostname:false, "ip": address.ip?address.ip:false}));
-            res.end();
-        }
-    });
+    if(address.ip){
+        isHostAlive(address.ip, function(isAlive){
+            console.log("isAlive: "+isAlive);
+            if(isAlive){
+                //if alive mount jsonresponse
+                mount_JSONResponse(address, res);
+            }
+            else{
+                res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hostname:false, "ip": address.ip?address.ip:false}));
+                res.end();
+            }
+        });
+    }
+    else{
+        hostnameToIp(address.hostname, function(ip, family){
+            isHostAlive(ip, function(isAlive){
+                console.log("isAlive: "+isAlive);
+                if(isAlive){
+                    mount_JSONResponse(address, res);
+                }
+                else{
+                    res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hostname:false, "ip": address.ip?address.ip:false}));
+                    res.end();
+                }
+            });
+        });
+    }
 }
 
 function mount_JSONResponse(address, res){
@@ -74,7 +92,7 @@ function mount_JSONResponse(address, res){
             JSON_georesponse["lon"] = geo.ll[1];
 
             JSON_response["geo"] = JSON_georesponse;
-            console.log(JSON_response);
+
             res.end(JSON.stringify(JSON_response));
         });
     }else{
@@ -94,7 +112,7 @@ function mount_JSONResponse(address, res){
                 JSON_georesponse["lon"] = geo.ll[1];
 
                 JSON_response["geo"] = JSON_georesponse;
-                console.log(JSON_response);
+
                 res.end(JSON.stringify(JSON_response));
             });
 
@@ -103,6 +121,7 @@ function mount_JSONResponse(address, res){
     }
 
 }
+
 
 
 var Pinger = module.exports = {};
