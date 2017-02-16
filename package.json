@@ -7,9 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-      "traceroute": "1.0.0",
-      "ping": "0.2.1",
-      "geoip-lite": "1.1.9",
+      "ping": "*",
+      "geoip-lite": "*",
       "connect": "*"
   },
   "author": "aracytopterm",
