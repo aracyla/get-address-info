@@ -92,7 +92,7 @@ function mount_JSONResponse(address, res){
             JSON_georesponse["lon"] = geo.ll[1];
 
             JSON_response["geo"] = JSON_georesponse;
-
+            console.log(JSON_response);
             res.end(JSON.stringify(JSON_response));
         });
     }else{
@@ -112,7 +112,7 @@ function mount_JSONResponse(address, res){
                 JSON_georesponse["lon"] = geo.ll[1];
 
                 JSON_response["geo"] = JSON_georesponse;
-
+                console.log(JSON_response);
                 res.end(JSON.stringify(JSON_response));
             });
 
