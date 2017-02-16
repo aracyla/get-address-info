@@ -4,9 +4,7 @@ var tcpp = require('tcp-ping');
 
 
 var isHostAlive = function (host_ip, f_cb){
-    console.log(host_ip);
     tcpp.ping({ address: host_ip, attempts: 1, timeout: 4000 }, function(err, data) {
-        console.log(data);
         if(data.max)
             f_cb(true);
         else
@@ -39,12 +37,12 @@ address = {ip: value, hostname: value}
 var pinger_exe = function (address, res){
     res.writeHead(200, {"Content-type": 'application/json'});
     console.log("=>pinger mainApp:");
-    console.log("=>Ip: "+address.ip);
-    console.log("=>Hostname: "+address.hostname);
+    console.log("------Ip: "+address.ip);
+    console.log("------Hostname: "+address.hostname);
 //CHECK IF IS ALIVE
     if(address.ip){
         isHostAlive(address.ip, function(isAlive){
-            console.log("isAlive: "+isAlive);
+            console.log("------isAlive: "+isAlive);
             if(isAlive){
                 //if alive mount jsonresponse
                 mount_JSONResponse(address, res);
@@ -76,11 +74,14 @@ function mount_JSONResponse(address, res){
     var JSON_response = {};
     JSON_response["isAlive"] = true;
     //res.write(JSON.stringify({isAlive: true}));
+    console.log("=>pinger mountingJsonResponse: ");
     if(address.ip){
+        console.log("------JSON_ip: "+address.ip);
         JSON_response["ip"] = address.ip;
         ipToHostnames(address.ip, function(hostnames){
             var JSON_georesponse = {};
 
+            console.log("------JSON_reverse_ip: "+hostnames);
             JSON_response["reverse_ip"] = hostnames;
             //console.log(JSON_response);
             var geo = getIpInformation(address.ip);
@@ -101,10 +102,13 @@ function mount_JSONResponse(address, res){
     }else{
 
         hostnameToIp(address.hostname, function(ip, family){
+
+            console.log("------JSON_ip: "+ip);
             JSON_response["ip"] = ip;
             ipToHostnames(ip, function(hostnames){
                 var JSON_georesponse = {};
 
+                console.log("------JSON_reverse_ip: "+hostnames);
                 JSON_response["reverse_ip"] = hostnames;
                 //console.log(JSON_response);
                 var geo = getIpInformation(ip);
