@@ -36,7 +36,7 @@ var pinger_exe = function (address, res){
     res.writeHead(200, {"Content-type": 'application/json'});
     console.log("=>pinger mainApp:");
     console.log("=>Ip: "+address.ip);
-    console.log("=>Hostname: "+address.hostname)
+    console.log("=>Hostname: "+address.hostname);
 //CHECK IF IS ALIVE
 
     isHostAlive((address.ip)?address.ip:address.hostname, function(isAlive){
