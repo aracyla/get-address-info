@@ -65,7 +65,7 @@ function HTTP_SendFile(res, req, basename){
 
 app.use('/', server);
 
-var port = (process.env.PORT || 8080);
+var port = 8080;
 
 http.createServer(app).listen(port);
 console.log('Server is running...');
