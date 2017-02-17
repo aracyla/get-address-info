@@ -2,7 +2,7 @@ var geoip = require('geoip-lite');
 var dns = require('dns');
 //var tcpp = require('tcp-ping');
 //var ping = require('ping');
-//var http = require('http');
+var http = require('http');
 
 
 var isHostAlive = function (host_ip, f_cb){
@@ -23,7 +23,7 @@ var isHostAlive = function (host_ip, f_cb){
     }).on('error', function(e){
         f_cb(false);
     });
-    
+
 
 
 }
