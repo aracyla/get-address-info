@@ -1,15 +1,21 @@
 var geoip = require('geoip-lite');
 var dns = require('dns');
-var tcpp = require('tcp-ping');
+//var tcpp = require('tcp-ping');
+var ping = require('ping');
 
 
 var isHostAlive = function (host_ip, f_cb){
+    /*
     tcpp.ping({ address: host_ip, attempts: 1, timeout: 4000 }, function(err, data) {
         if(data.max)
             f_cb(true);
         else
             f_cb(false);
-    });
+    });*/
+
+    ping.sys.probe(host_ip, function(isAlive){
+        f_cb(isAlive);
+    })
 }
 
 var ipToHostnames = function (address, f_cb){
