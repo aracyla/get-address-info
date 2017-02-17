@@ -1,7 +1,7 @@
 var geoip = require('geoip-lite');
 var dns = require('dns');
 //var tcpp = require('tcp-ping');
-var ping = require('ping');
+//var ping = require('ping');
 //var http = require('http');
 
 
@@ -12,18 +12,18 @@ var isHostAlive = function (host_ip, f_cb){
             f_cb(true);
         else
             f_cb(false);
-    });*/
+    });
 
     ping.sys.probe(host_ip, function(isAlive){
         f_cb(isAlive);
     })
-/*
+*/
     http.get({host: host_ip}, function(c){
         f_cb(true);
     }).on('error', function(e){
         f_cb(false);
     });
-    */
+    
 
 
 }
