@@ -7,7 +7,8 @@
    },
    "dependencies": {
       "geoip-lite": "1.1.9",
-      "connect": "3.5.1"
+      "connect": "3.5.1",
+      "net-ping": "1.2.0"
   },
   "author": "aracytopterm",
   "license": "ISC"
