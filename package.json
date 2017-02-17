@@ -7,9 +7,7 @@
    },
    "dependencies": {
       "geoip-lite": "1.1.9",
-      "connect": "3.5.1",
-      "q": "1.x",
-      "underscore": "^1.8.3"
+      "connect": "3.5.1"
   },
   "author": "aracytopterm",
   "license": "ISC"
