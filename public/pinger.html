@@ -72,8 +72,7 @@ $($('#form_pinger').on('submit', function(event){
             var data = "";
             if(response.isAlive){
                 data = '<p><span class="response_font"><b>Status</b>: <span class="response_online">Online</span></span><br />';
-                data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br />';
-                data = data+'<span class="response_font"><b>Reverse ip</b>: '+response.reverse_ip[0]+'</span></p><hr />';
+                data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
                 data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
                 data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
 
