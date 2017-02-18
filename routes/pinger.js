@@ -1,7 +1,7 @@
 var geoip = require('geoip-lite');
 var dns = require('dns');
 var Ping = require('ping-lite');
-var http = require('http');
+//var http = require('http');
 
 
 var isHostAlive = function (host_ip, f_cb){
