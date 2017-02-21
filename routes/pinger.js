@@ -167,3 +167,6 @@ function stripHTTP(str){
 var Pinger = module.exports = {};
 
 Pinger.mainApp = pinger_exe;
+
+
+//TODO: add an axception for local ips(dns). Use geo ip directly
