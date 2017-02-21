@@ -96,7 +96,7 @@ $($('#form_pinger').on('submit', function(event){
             console.log(response);
             var data = "";
             if(response.isAlive){
-                data = '<p><span class="response_font"><b>Status</b>: <span class="response_online">Online</span></span><br />';
+                data = '<p><span class="response_font"><b>Status</b>: <span class="'+(response.isAlive=="undefined"?"":"response_online")+'">'+(response.isAlive=="undefined"?"Undefined":"Online")+'</span></span><br />';
                 data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
                 data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
                 data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
