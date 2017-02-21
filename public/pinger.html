@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Ping4U</title>
+    <title>getSITEinfo</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="pinger.css">
 </head>
@@ -13,25 +13,26 @@
     <header>
         <nav class="app_navigation">
             <div class="app_logo">
-                <a href="#">Ping<span class="logo_em">4</span>U</a>
+                <a href="#">get<span class="logo_em">SITE</span>info</a>
             </div>
         </nav>
     </header>
     <div class="content_area">
         <div class="app_area">
-            <div>
-                <form class="ping_form" id="form_pinger" method="post">
-                    <label for="ip" class="hidden_label">Ip:</label>
-                    <input type="text" name="ip" id="ip" placeholder='xxx.xxx.xxx.xxx' /> <!-- http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
-                    <br />
-                    <br />
-                    <span>or</span>
-                    <br />
-                    <br />
-                    <label for="hostname" class="hidden_label">Hostname:</label>
-                    <input type="text" name="hostname" id="hostname" placeholder='Site address' />
-                    <button id="ping_button">PING!</button>
-                </form>
+            <form class="ping_form" id="form_pinger" method="post">
+                <label for="ip" class="hidden_label">Ip:</label>
+                <input type="text" name="ip" id="ip" placeholder='xxx.xxx.xxx.xxx' /> <!-- http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
+                <br />
+                <br />
+                <span>or</span>
+                <br />
+                <br />
+                <label for="hostname" class="hidden_label">Hostname:</label>
+                <input type="text" name="hostname" id="hostname" placeholder='Site address' />
+                <button id="ping_button">CHECK!</button>
+            </form>
+            <div class="loading_area clear_float" id='loading_area'>
+                <div class="loading_ball" id='loading_ball'></div>
             </div>
         </div>
 
@@ -48,11 +49,29 @@
 </div>
 
 
+
+<footer>
+    <div class="app_navigation">
+        <a href="https://aracytopterm.github.io/">by @AracyTopTerm(Leonardo Ramos)</a>
+    </div>
+</footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv2R8JnxDrhLXHs_-KKL__KQj0j5IOEUE"
     async defer></script>
 
 <script>
+
+function loadingAnimation(){
+    $('.loading_ball').css("animation", "loadingAnimation 1s");//turn off animation
+    $('.loading_ball').css("animation-fill-mode", "forwards");
+    $('.loading_ball').css("animation-iteration-count", "infinite");
+    $('.loading_ball').css("animation-direction", "alternate");
+    $('.loading_ball').css("animation-timing-function", "linear");
+
+    $('#loading_ball').fadeIn("slow");
+}
+
 $($('#form_pinger').on('submit', function(event){
     event.preventDefault();
     var address;
@@ -60,6 +79,12 @@ $($('#form_pinger').on('submit', function(event){
         address = {ip: $('#ip').val()};
     else
         address = {hostname: $('#hostname').val()};
+
+    loadingAnimation();
+
+    //block button
+     $("#ping_button").prop("disabled",true);
+     $('#ping_button').css("cursor", "progress");
 
     $.ajax({
         url: '/pinger',
@@ -84,10 +109,20 @@ $($('#form_pinger').on('submit', function(event){
             }
 
             $('#response_area_txt').html(data);
+            $('#loading_ball').fadeOut("slow", function(){
+                $('.loading_ball').css("animation", "0");//turn off animation
+            });
+
             $('.hidden_layer').show();
+
+
+            //delay to not allow multiple requests
+            $("#ping_button").delay(1000).prop("disabled",false);
+            $("#ping_button").css("cursor", "default");
         }
     });
 }));
+
 
 </script>
 <script>

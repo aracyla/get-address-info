@@ -1,8 +1,10 @@
 var geoip = require('geoip-lite');
 var dns = require('dns');
-var Ping = require('ping-lite');
-//var http = require('http');
+var http = require('http');
 
+const TIMEOUT = 6000;
+
+const DNS_PUBLIC_TABLE = ["8.8.8.8", "8.8.4.4"];
 
 var isHostAlive = function (host_ip, f_cb){
     /*
@@ -15,21 +17,24 @@ var isHostAlive = function (host_ip, f_cb){
 
     ping.sys.probe(host_ip, function(isAlive){
         f_cb(isAlive);
-    })
+    })*/
+    if(DNS_PUBLIC_TABLE.find(function (ip_dns_pub){
+        return (ip_dns_pub == host_ip);
+    })){
+        f_cb(true);
+        return ;
+    }
 
-    http.get({host: host_ip}, function(c){
+    var req = http.get({host: host_ip}, function(c){
+        console.log(c.statusCode);
         f_cb(true);
     }).on('error', function(e){
         f_cb(false);
-    });*/
-    var ping = new Ping(host_ip);
-    ping.send(function(err, ms){
-        if(!ms)
-            f_cb(false);
-        else
-            f_cb(true);
     });
 
+    req.setTimeout(TIMEOUT, function(){
+        req.abort();
+    });
 
 }
 /* Working on it!
@@ -66,6 +71,8 @@ var pinger_exe = function (address, res){
     console.log("------Hostname: "+address.hostname);
 //CHECK IF IS ALIVE
     if(address.ip){
+        address.ip = (stripHTTP(address.ip));
+
         isHostAlive(address.ip, function(isAlive){
             console.log("------isAlive: "+isAlive);
             if(isAlive){
@@ -79,6 +86,8 @@ var pinger_exe = function (address, res){
         });
     }
     else{
+        address.hostname = (stripHTTP(address.hostname));
+
         hostnameToIp(address.hostname, function(ip, family){
             isHostAlive(ip, function(isAlive){
                 console.log("isAlive: "+isAlive);
@@ -144,6 +153,13 @@ function mount_JSONResponse(address, res){
         });
     }
 
+}
+
+function stripHTTP(str){
+    var http_pattern = /http:\/\//i;
+    rm = str.match(http_pattern);
+    if(!rm) return str;
+    return (str.slice(rm[0].length, str.length));
 }
 
 

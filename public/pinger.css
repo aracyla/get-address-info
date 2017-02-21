@@ -150,6 +150,25 @@ div .app_area {
 /* End navigation menu */
 
 
+/* Footer */
+
+/* End footer */
+footer .app_navigation{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    text-align: right;
+    padding-right: 20px;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+footer .app_navigation a{
+    text-decoration: none;
+    color: gray;
+}
+
+
 /* fixes*/
 .center{
     margin-left: auto;
@@ -221,8 +240,34 @@ input:-webkit-autofill:active {
 }
 /*end Bounce animation*/
 
-
-/*loading animation*/
 @keyframes loadingAnimation {
+    100%  {
+        transform: translateX(1250%);
+
+    }
+}
+
+.loading_area {
+    padding: 0px;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: -40px;
+    box-sizing: border-box;
+    height: 30px;
+    width: 16%;
+}
+
+.loading_ball {
+    animation: 0;
+
+    display: none;
+    float:left;
+    width: 20px;
+    height: 20px;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 50%;
+    background-color: #D82645;
+
 }
 /*end loading animation*/

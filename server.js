@@ -20,6 +20,7 @@ var server = function (req, res){
 
         case "/pinger":
             console.log("=>pinger route");
+
             if(req.method == 'POST'){
                 var body = "";
                 req.on('data', function (data) {
@@ -31,6 +32,7 @@ var server = function (req, res){
                 });
 
             }
+
         break;
 
         //invalid routes will fall here and be ignored by sendfile function
