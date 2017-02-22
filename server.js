@@ -12,8 +12,6 @@ var app = connect();
 var server = function (req, res){
     switch (req.url) {
         case "/favicon.ico":
-            var address = {"ip": getClientIp(req), "hostname": ""}
-            Pinger.mainApp(address, res);
         break;
 
         case "/":
@@ -34,7 +32,11 @@ var server = function (req, res){
                 });
 
             }
+        break;
 
+        case "/pageload":
+            var address = {"ip": getClientIp(req), "hostname": ""};
+            Pinger.mainApp(address, res);
         break;
 
         //invalid routes will fall here and be ignored by sendfile function
