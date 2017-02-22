@@ -12,6 +12,8 @@ var app = connect();
 var server = function (req, res){
     switch (req.url) {
         case "/favicon.ico":
+            var address = {"ip": getClientIp(req), "hostname": ""}
+            Pinger.mainApp(address, res);
         break;
 
         case "/":
@@ -63,6 +65,27 @@ function HTTP_SendFile(res, req, basename){
         }
 
 }
+
+function getClientIp(req){
+    var ipAddr = req.headers["x-forwarded-for"];
+    if (ipAddr){
+        var list = ipAddr.split(",");
+        ipAddr = list[list.length-1];
+    } else {
+        ipAddr = req.connection.remoteAddress;
+    }
+    rm = ipAddr.lastIndexOf(':');
+    if(!rm) return null;
+
+    return ipAddr.slice(rm+1, ipAddr.length);
+}
+/*
+function stripIp(ipAddr){
+    var ip_pattern = /\d\d\d.\d\d\d.\d\d\d.\d\d\d/i;
+    rm = str.match(http_pattern);
+    if(!rm) return str;
+    return (str.slice(rm[0].length, str.length));
+}*/
 
 
 app.use('/', server);

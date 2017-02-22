@@ -68,6 +68,7 @@ var pinger_exe = function (address, res){
                 JSON_georesponse = mount_JSONGeoResponse(address.ip);
                 //NOT FOUNG GEO INFO - MOUNT NOT FOUND RESPONSE
                 if(!JSON_georesponse){
+                    console.log(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hostname:false, "ip": address.ip?address.ip:false}));
                     res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hostname:false, "ip": address.ip?address.ip:false}));
                     res.end();
                 }
@@ -138,9 +139,8 @@ function mount_JSONResponse(address, res){
 function mount_JSONGeoResponse(ip) {
     var JSON_georesponse = {};
 
-    //console.log(JSON_response);
     var geo = getIpInformation(ip);
-    if(!geo.ll[0]) return null;
+    if(!geo) return null;
     JSON_georesponse["country"] = geo.country;
     JSON_georesponse["state"] = geo.region;
     JSON_georesponse["city"] = geo.city;
@@ -164,5 +164,3 @@ function stripHTTP(str){
 var Pinger = module.exports = {};
 
 Pinger.mainApp = pinger_exe;
-
-//TODO: get informatio from the person that is getting into the site and fill it

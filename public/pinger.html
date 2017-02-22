@@ -61,6 +61,46 @@
     async defer></script>
 
 <script>
+$(document).ready( function(){
+    loadingAnimation();
+
+    //block button
+     $("#ping_button").prop("disabled",true);
+     $('#ping_button').css("cursor", "progress");
+
+    $.ajax({
+        contentType: 'application/json',
+        success: function(response){
+            var data;
+            console.log(response);
+            var data = "";
+            if(response.isAlive){
+                data = '<p><span class="response_font"><b>Status</b>: <span class="'+(response.isAlive=="undefined"?"":"response_online")+'">'+(response.isAlive=="undefined"?"Undefined":"Online")+'</span></span><br />';
+                data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
+                data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
+                data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
+
+                $('#map').show();
+                initMap(response.geo.lat, response.geo.lon, response.geo.city);
+            }
+            else{
+                data = '<p><span class="response_font"><b>Status</b>: Offline<br />Address not found</span>';
+            }
+
+            $('#response_area_txt').html(data);
+            $('#loading_ball').fadeOut("slow", function(){
+                $('.loading_ball').css("animation", "0");//turn off animation
+            });
+
+            $('.hidden_layer').show();
+
+
+            //delay to not allow multiple requests
+            $("#ping_button").delay(1000).prop("disabled",false);
+            $("#ping_button").css("cursor", "default");
+        }
+    });
+});
 
 function loadingAnimation(){
     $('.loading_ball').css("animation", "loadingAnimation 1s");//turn off animation
@@ -70,6 +110,8 @@ function loadingAnimation(){
     $('.loading_ball').css("animation-timing-function", "linear");
 
     $('#loading_ball').fadeIn("slow");
+
+
 }
 
 $($('#form_pinger').on('submit', function(event){
