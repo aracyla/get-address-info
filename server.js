@@ -96,8 +96,3 @@ var port = (process.env.PORT || 5000);
 
 http.createServer(app).listen(port);
 console.log('Server is running...');
-
-
-//FIXME:check if address exists
-//TODO:add this code to appjs module
-//TODO:organize route and public folders
