@@ -1,45 +1,129 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>Ping4U</title>
+    <title>getSITEinfo</title>
+
     <link rel="stylesheet" type="text/css" href="pinger.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="container clear_float">
     <header>
         <nav class="app_navigation">
             <div class="app_logo">
-                <a href="#">Ping<span class="logo_em">4</span>U</a>
+                <a href="#">get<span class="logo_em">SITE</span>info</a>
             </div>
         </nav>
     </header>
     <div class="content_area">
         <div class="app_area">
-            <div>
-                <form class="ping_form" id="form_pinger" method="post">
-                    <label for="ip" class="hidden_label">Ip:</label>
-                    <input type="text" name="ip" id="ip" placeholder='xxx.xxx.xxx.xxx' /> <!-- http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
-                    <br />
-                    <br />
-                    <span>or</span>
-                    <br />
-                    <br />
-                    <label for="hostname" class="hidden_label">Hostname:</label>
-                    <input type="text" name="hostname" id="hostname" placeholder='Site address' />
-                    <button id="ping_button">PING!</button>
-                </form>
+            <form class="ping_form" id="form_pinger" method="post">
+                <label for="ip" class="hidden_label">Ip:</label>
+                <input type="text" name="ip" id="ip" placeholder='xxx.xxx.xxx.xxx' /> <!-- http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
+                <br />
+                <br />
+                <span>or</span>
+                <br />
+                <br />
+                <label for="hostname" class="hidden_label">Hostname:</label>
+                <input type="text" name="hostname" id="hostname" placeholder='Site address' />
+                <button id="ping_button">CHECK!</button>
+            </form>
+            <div class="loading_area clear_float" id='loading_area'>
+                <div class="loading_ball" id='loading_ball'></div>
             </div>
         </div>
+
+        <div class="response_area clear_float">
+            <div class="hidden_layer">
+                <div class="response_area_txt" id="response_area_txt"></div>
+                <div id="map" class="map_style"></div>
+
+                </div>
+            </div>
+        </div>
+        <!---->
     </div>
 </div>
 
 
 
+<footer>
+    <div class="app_navigation">
+        <a href="https://aracytopterm.github.io/">by @AracyTopTerm(Leonardo Ramos)</a>
+    </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv2R8JnxDrhLXHs_-KKL__KQj0j5IOEUE"
+    async defer></script>
+
 <script>
-$('#form_pinger').on('submit', function(event){
+$(document).ready( function(){
+    loadingAnimation();
+
+    //block button
+     $("#ping_button").prop("disabled",true);
+     $('#ping_button').css("cursor", "progress");
+
+     $.ajax({
+         url: '/pageload',
+         method: 'POST',
+         contentType: 'application/json',
+         success: function(response){
+             var data;
+             console.log(response);
+             var data = "";
+             if(response.isAlive){
+                 data = '<p><span class="response_font"><b>Status</b>: <span class="'+(response.isAlive=="undefined"?"":"response_online")+'">'+(response.isAlive=="undefined"?"Undefined":"Online")+'</span></span><br />';
+                 data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
+                 data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
+                 data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
+
+                 $('#map').show();
+                 initMap(response.geo.lat, response.geo.lon, response.geo.city);
+             }
+             else{
+                 data = '<p><span class="response_font"><b>Status</b>: Offline<br />Address "'+(response.ip?response.ip:response.hostname)+'"<br /> not found</span>';
+             }
+
+             $('#response_area_txt').html(data);
+             $('#loading_ball').fadeOut("slow", function(){
+                 $('.loading_ball').css("animation", "0");//turn off animation
+             });
+
+             $('.hidden_layer').show();
+
+
+             //delay to not allow multiple requests
+             $("#ping_button").delay(1000).prop("disabled",false);
+             $("#ping_button").css("cursor", "default");
+         }
+     });
+});
+
+function loadingAnimation(){
+    $('.loading_ball').css("animation", "loadingAnimation 1s");//turn off animation
+    $('.loading_ball').css("animation-fill-mode", "forwards");
+    $('.loading_ball').css("animation-iteration-count", "infinite");
+    $('.loading_ball').css("animation-direction", "alternate");
+    $('.loading_ball').css("animation-timing-function", "linear");
+
+    $('#loading_ball').fadeIn("slow");
+
+
+}
+
+$($('#form_pinger').on('submit', function(event){
     event.preventDefault();
     var address;
     if($('#ip').val() != "")
@@ -47,19 +131,75 @@ $('#form_pinger').on('submit', function(event){
     else
         address = {hostname: $('#hostname').val()};
 
+    loadingAnimation();
+
+    //block button
+     $("#ping_button").prop("disabled",true);
+     $('#ping_button').css("cursor", "progress");
+
     $.ajax({
         url: '/pinger',
         method: 'POST',
         contentType: 'application/json',
         data: (address),
         success: function(response){
+            var data;
             console.log(response);
+            var data = "";
+            if(response.isAlive){
+                data = '<p><span class="response_font"><b>Status</b>: <span class="'+(response.isAlive=="undefined"?"":"response_online")+'">'+(response.isAlive=="undefined"?"Undefined":"Online")+'</span></span><br />';
+                data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
+                data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
+                data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
+
+                $('#map').show();
+                initMap(response.geo.lat, response.geo.lon, response.geo.city);
+            }
+            else{
+                data = '<p><span class="response_font"><b>Status</b>: Offline<br />Address not found</span>';
+            }
+
+            $('#response_area_txt').html(data);
+            $('#loading_ball').fadeOut("slow", function(){
+                $('.loading_ball').css("animation", "0");//turn off animation
+            });
+
+            $('.hidden_layer').show();
+
+
+            //delay to not allow multiple requests
+            $("#ping_button").delay(1000).prop("disabled",false);
+            $("#ping_button").css("cursor", "default");
         }
     });
-});
-//TODO:add load script to end of the page
-//TODO:add loading signal to the page
+}));
+
+
 </script>
+<script>
+    function initMap(lat, lon, city) {
+        var opts = {
+            center: {lat: lat, lng: lon},
+            scrollwheel: false,
+            zoom: 10
+        };
+        var map = new google.maps.Map(document.getElementById("map"),opts);
+        var marker = new google.maps.Marker({
+            position: {lat: lat, lng: lon},
+            map: map,
+            title: city
+        });
+
+
+    }
+
+</script>
+
+
 </body>
 
 </html>
+
+
+<!-- TODO: add ip mask to ip input
+FIXME: metatag

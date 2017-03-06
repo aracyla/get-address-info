@@ -5,23 +5,22 @@ var fs = require('fs');
 var path = require('path');
 var qs = require('querystring');
 
-var pinger = require('./routes/pinger');
+var Pinger = require('./routes/pinger');
 
 var app = connect();
 
 var server = function (req, res){
-    console.log(req.url);
     switch (req.url) {
         case "/favicon.ico":
-            console.log("favicon request...");
-            //res.end();
         break;
 
         case "/":
-            HTTP_SendFile(res, req, "routes/pinger");
+            HTTP_SendFile(res, req, "public/pinger");
         break;
 
         case "/pinger":
+            console.log("=>pinger route");
+
             if(req.method == 'POST'){
                 var body = "";
                 req.on('data', function (data) {
@@ -29,24 +28,23 @@ var server = function (req, res){
                 });
                 req.on("end", function(){
                     var post = qs.parse(body);
-                    pinger_exe(post, res);
+                    Pinger.mainApp(post, res);
                 });
 
             }
         break;
 
+        case "/pageload":
+            var address = {"ip": getClientIp(req), "hostname": ""};
+            Pinger.mainApp(address, res);
+        break;
+
         //invalid routes will fall here and be ignored by sendfile function
         default:
-            HTTP_SendFile(res, req, "routes/pinger");
+            HTTP_SendFile(res, req, "public/pinger");
         break;
 
     }
-
-    //page template
-
-    //if(path.extname(req.url) != "ico")
-
-
 }
 
 function HTTP_SendFile(res, req, basename){
@@ -57,12 +55,12 @@ function HTTP_SendFile(res, req, basename){
     switch (path.extname(req.url)) {
             case ".css":
                 res.writeHead(200, {"Content-type": "text/css"});
-                fs.createReadStream("app.css").pipe(res);
+                fs.createReadStream(filepath).pipe(res);
             break;
 
             default:
                 res.writeHead(200, {"Content-type": "text/html"});
-                fs.createReadStream("app.html").pipe(res);
+                fs.createReadStream(filepath).pipe(res);
 
             break;
 
@@ -70,32 +68,31 @@ function HTTP_SendFile(res, req, basename){
 
 }
 
+function getClientIp(req){
+    var ipAddr = req.headers["x-forwarded-for"];
+    if (ipAddr){
+        var list = ipAddr.split(",");
+        ipAddr = list[list.length-1];
+    } else {
+        ipAddr = req.connection.remoteAddress;
+    }
+    rm = ipAddr.lastIndexOf(':');
+    if(!rm) return null;
+
+    return ipAddr.slice(rm+1, ipAddr.length);
+}
+/*
+function stripIp(ipAddr){
+    var ip_pattern = /\d\d\d.\d\d\d.\d\d\d.\d\d\d/i;
+    rm = str.match(http_pattern);
+    if(!rm) return str;
+    return (str.slice(rm[0].length, str.length));
+}*/
+
 
 app.use('/', server);
 
-http.createServer(app).listen(3000);
+var port = (process.env.PORT || 5000);
+
+http.createServer(app).listen(port);
 console.log('Server is running...');
-
-//FIXME:check if address exists
-function app_exe(address, res, fcb_EndResponse){
-    res.writeHead(200, {"Content-type": 'application/json'});
-
-//CHECK IF IS ALIVE
-    app_js.isHostAlive((address.ip)?address.ip:address.hostname, function(isAlive){
-        if(isAlive){
-            //FIXME:add a function to mount and handle all response jsons
-            res.write(JSON.stringify({isAlive: true}));
-            res.end();
-        }
-        else{
-            res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hoshostname:false, "ip": address.ip?address.ip:false}));
-            res.end();
-        }
-
-    });
-
-
-}
-
-//TODO:add this code to appjs module
-//TODO:organize route and public folders
