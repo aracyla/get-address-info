@@ -3,12 +3,23 @@
   "version": "1.0.0",
   "description": "Simple pinger app",
   "scripts": {
-      "start": "node server.js"
-   },
-   "dependencies": {
-      "geoip-lite": "1.1.9",
-      "connect": "3.5.1"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "geoip-lite": "1.1.9",
+    "connect": "3.5.1"
   },
   "author": "aracytopterm",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^7.0.0",
+    "gulp-watch": "^4.3.11",
+    "postcss-import": "^10.0.0",
+    "postcss-mixins": "^6.0.0",
+    "postcss-nested": "^2.0.2",
+    "postcss-simple-vars": "^4.0.0"
+  }
 }
