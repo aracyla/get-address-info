@@ -1,0 +1,21 @@
+.nav-menu {
+    background-color: #D82645;
+    margin-top: 0px;
+    text-align: center;
+    border-bottom: 5px solid #D82672;
+
+    &__logo {
+        animation-name: fadeBounce;
+        animation-duration: 1s;
+        color: white;
+        text-decoration: none;
+        padding: 6px 0 6px 0;
+        font-size: 130%;
+        display: block;
+        //width: 20%;
+        border-top: 6px solid #D82645;
+    }
+
+
+
+}
