@@ -1,21 +1,24 @@
 .nav-menu {
     background-color: #D82645;
     margin-top: 0px;
-    text-align: center;
     border-bottom: 5px solid #D82672;
+    min-height: 3em;
+    position:relative;
+    line-height: 3em;
 
     &__logo {
-        animation-name: fadeBounce;
-        animation-duration: 1s;
+        position: absolute;
+        right:50%;
+        display: block;
         color: white;
         text-decoration: none;
-        padding: 6px 0 6px 0;
-        font-size: 130%;
-        display: block;
-        //width: 20%;
-        border-top: 6px solid #D82645;
+        font-size: 1.5em;
+        font-weight: 200;
+
     }
 
-
+    &__logo-strong {
+        font-weight: 800;
+    }
 
 }

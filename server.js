@@ -9,13 +9,17 @@ var Pinger = require('./routes/pinger');
 
 var app = connect();
 
+
+var mainRoute_file = "pinger.html"
+
 var server = function (req, res){
+    console.log(req.url)
     switch (req.url) {
         case "/favicon.ico":
         break;
 
         case "/":
-            HTTP_SendFile(res, req, "public/pinger");
+            HTTP_SendFile(res, req, "public/");
         break;
 
         case "/pinger":
@@ -41,16 +45,20 @@ var server = function (req, res){
 
         //invalid routes will fall here and be ignored by sendfile function
         default:
-            HTTP_SendFile(res, req, "public/pinger");
+            HTTP_SendFile(res, req, "public/");
         break;
 
     }
 }
 
-function HTTP_SendFile(res, req, basename){
+function HTTP_SendFile(res, req, basepath){
     var filepath;
-    if(!path.extname(req.url)) filepath = basename+".html";
-    else filepath = basename+path.extname(req.url);
+    if(!path.extname(req.url)) filepath = basepath+mainRoute_file;
+    else
+        if(path.extname(req.url) == ".css")
+            filepath = basepath+"temp/styles/style.css";
+
+    console.log(filepath);
 
     switch (path.extname(req.url)) {
             case ".css":
