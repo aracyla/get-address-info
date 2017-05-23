@@ -449,25 +449,36 @@ template {
   display: none;
 }
 
+* {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
 .nav-menu {
     background-color: #D82645;
     margin-top: 0px;
     border-bottom: 5px solid #D82672;
     min-height: 3em;
     position:relative;
-    line-height: 3em;
+    text-align: center;
 
 }
 
 .nav-menu__logo {
-        position: absolute;
-        right:50%;
-        display: block;
+        //right:50%;
+        display: inline-block;
         color: white;
         text-decoration: none;
-        font-size: 1.5em;
+        font-size: 1.4rem;
+        //font-size: 1.5rem;
         font-weight: 200;
+        //border-top: 6px solid #D82672;
+        line-height: 2em;
 
+    }
+
+.nav-menu__logo:hover{
+        //border-top: 6px solid white;
     }
 
 .nav-menu__logo-strong {
