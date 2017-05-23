@@ -1,0 +1,5 @@
+@define-mixin normalScreen {
+    @media (min-width: 640px){
+        @mixin-content;
+    }
+}

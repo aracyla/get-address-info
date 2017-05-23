@@ -2,28 +2,32 @@
     background-color: #D82645;
     margin-top: 0px;
     border-bottom: 5px solid #D82672;
-    min-height: 3em;
     position:relative;
     text-align: center;
+
     &__logo {
-        //right:50%;
         display: inline-block;
         color: white;
         text-decoration: none;
         font-size: 1.4rem;
-        //font-size: 1.5rem;
         font-weight: 200;
-        //border-top: 6px solid #D82672;
-        line-height: 2em;
+        line-height: 1.5em;
 
-    }
+        @mixin normalScreen {
+            font-size: 1.5rem;
+            border-top: 6px solid #D82672;
+            line-height: 1.7em;
+        }
 
-    &__logo:hover{
-        //border-top: 6px solid white;
     }
 
     &__logo-strong {
         font-weight: 800;
     }
 
+    @mixin normalScreen {
+        &__logo:hover{
+            border-top: 6px solid white;
+        }
+    }
 }

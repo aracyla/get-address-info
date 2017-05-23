@@ -458,29 +458,36 @@ template {
     background-color: #D82645;
     margin-top: 0px;
     border-bottom: 5px solid #D82672;
-    min-height: 3em;
     position:relative;
     text-align: center;
-
 }
 
 .nav-menu__logo {
-        //right:50%;
         display: inline-block;
         color: white;
         text-decoration: none;
         font-size: 1.4rem;
-        //font-size: 1.5rem;
         font-weight: 200;
-        //border-top: 6px solid #D82672;
-        line-height: 2em;
+        line-height: 1.5em;
 
     }
 
-.nav-menu__logo:hover{
-        //border-top: 6px solid white;
+@media (min-width: 640px){
+
+.nav-menu__logo {
+            font-size: 1.5rem;
+            border-top: 6px solid #D82672;
+            line-height: 1.7em
+
+    }
     }
 
 .nav-menu__logo-strong {
         font-weight: 800;
+    }
+
+@media (min-width: 640px){
+        .nav-menu__logo:hover{
+            border-top: 6px solid white;
+        }
     }
