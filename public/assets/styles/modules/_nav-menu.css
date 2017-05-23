@@ -1,7 +1,7 @@
 .nav-menu {
-    background-color: #D82645;
+    background-color: $mainRed;
     margin-top: 0px;
-    border-bottom: 5px solid #D82672;
+    border-bottom: 5px solid $mainPink;
     position:relative;
     text-align: center;
 
@@ -15,7 +15,7 @@
 
         @mixin normalScreen {
             font-size: 1.5rem;
-            border-top: 6px solid #D82672;
+            border-top: 6px solid $mainRed;
             line-height: 1.7em;
         }
 
@@ -27,7 +27,7 @@
 
     @mixin normalScreen {
         &__logo:hover{
-            border-top: 6px solid white;
+            border-top: 6px solid rgba(255,255,255,.83);
         }
     }
 }
