@@ -3,3 +3,17 @@
         @mixin-content;
     }
 }
+
+@define-mixin clearfix {
+    &:before {
+        content: "";
+        display: table;
+    }
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
