@@ -1,0 +1,14 @@
+.input-data {
+
+    margin-bottom: 3rem;
+
+    &__text {
+        height: 45px;
+        border: 2px solid #D82672;
+        border-radius: 7px;
+        font-size: 1.5rem;
+        background-color: #404040;
+        text-align: center;
+        color: white;
+    }
+}
