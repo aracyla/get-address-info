@@ -454,6 +454,13 @@ template {
             box-sizing: border-box;
 }
 
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    padding: 0px;
+    margin: 0px;
+}
+
 .nav-menu {
     background-color: #D82645;
     margin-top: 0px;
@@ -483,7 +490,7 @@ template {
     }
 
 .nav-menu__logo-strong {
-        font-weight: 800;
+        font-weight: 600;
     }
 
 @media (min-width: 640px){
@@ -496,20 +503,58 @@ template {
     display: table;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 80px;
+    margin-top: 10px;
 }
+
+@media (min-width: 640px){
+
+.input-group {
+        margin-top: 50px
+}
+    }
 
 .input-data {
 
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .input-data__text {
-        height: 45px;
+        height: 35px;
         border: 2px solid #D82672;
         border-radius: 7px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         background-color: #404040;
         text-align: center;
         color: white;
+    }
+
+@media (min-width: 640px){
+
+.input-data__text {
+            height: 45px;
+            font-size: 1.5rem
+    }
+    }
+
+.input-data__label {
+        display: block;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 100;
+        padding: .4em 0;
+        color: #D82645;
+    }
+
+@media (min-width: 640px){
+
+.input-data__label {
+            font-size: 1.5rem
+    }
+    }
+
+@media (min-width: 640px){
+
+.input-data {
+        margin-bottom: 3rem
+}
     }
