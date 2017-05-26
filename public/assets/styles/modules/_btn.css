@@ -1,0 +1,21 @@
+.btn {
+    display:block;
+    border-radius: 8px;
+    border: 3px solid $mainRed;
+    background-color: $mainPink;
+    padding: 5px 0px;
+    min-width: 40%;
+    font-size: .9rem;
+    color:white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+
+    @mixin normalScreen {
+        font-size: 1.4rem;
+        padding: 5px;
+        min-width: 80%;
+        margin-top: 60px;
+    }
+
+}
