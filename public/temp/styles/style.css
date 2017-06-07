@@ -552,6 +552,26 @@ body {
     }
     }
 
+.input-data__alt{
+        display: block;
+        color: #D82672;
+        font-size: 1.3rem;
+        font-weight: 100;
+        text-align: center;
+        margin: 0 60px 17px 60px;
+        border-top: 1px solid #D82645;
+        border-bottom: 1px solid #D82645;
+        padding: 2px 0;
+    }
+
+@media (min-width: 640px){
+
+.input-data__alt{
+            margin: 0 70px 35px 70px;
+            padding: 7px 0
+    }
+    }
+
 @media (min-width: 640px){
 
 .input-data {

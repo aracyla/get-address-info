@@ -29,6 +29,22 @@
             font-size: 1.5rem;
         }
     }
+    &__alt{
+        display: block;
+        color: $mainPink;
+        font-size: 1.3rem;
+        font-weight: 100;
+        text-align: center;
+        margin: 0 60px 17px 60px;
+        border-top: 1px solid $mainRed;
+        border-bottom: 1px solid $mainRed;
+        padding: 2px 0;
+
+        @mixin normalScreen {
+            margin: 0 70px 35px 70px;
+            padding: 7px 0;
+        }
+    }
 
     @mixin normalScreen {
         margin-bottom: 3rem;
