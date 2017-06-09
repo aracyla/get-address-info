@@ -493,6 +493,34 @@ body {
         font-weight: 600;
     }
 
+.nav-menu__copyrights {
+        color: white;
+        text-weight: 600;
+        font-size: .7em;
+    }
+
+@media (min-width: 640px){
+
+.nav-menu__copyrights {
+            font-size: .8em
+    }
+    }
+
+.nav-menu--footer {
+        position: absolute;
+        bottom: 0%;
+        width: 100%;
+        padding: 3px 7px 3px 0;
+        text-align: right;
+    }
+
+@media (min-width: 640px){
+
+.nav-menu--footer {
+            padding: 5px 17px 5px 0
+    }
+    }
+
 @media (min-width: 640px){
         .nav-menu__logo:hover{
             border-top: 6px solid rgba(255,255,255,.83);

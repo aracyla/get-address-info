@@ -59,8 +59,8 @@
 
 
 <footer>
-    <div class="app_navigation">
-        <a href="https://aracytopterm.github.io/">by @AracyTopTerm(Leonardo Ramos)</a>
+    <div class="nav-menu nav-menu--footer">
+        <a class="nav-menu__copyrights" href="https://aracytopterm.github.io/">by @AracyTopTerm(Leonardo Ramos)</a>
     </div>
 </footer>
 
@@ -73,10 +73,11 @@ $(document).ready( function(){
     loadingAnimation();
 
     //block button
-     $("#ping_button").prop("disabled",true);
-     $('#ping_button').css("cursor", "progress");
+    $("#ping_button").prop("disabled",true);
+    $('#ping_button').css("cursor", "progress");
+    $('#response_area_txt').hide();
 
-     $.ajax({
+    $.ajax({
          url: '/pageload',
          method: 'POST',
          contentType: 'application/json',
