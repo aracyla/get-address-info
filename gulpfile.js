@@ -5,8 +5,8 @@ postcss_nested = require('postcss-nested'),
 postcss_import = require('postcss-import'),
 postcss_mixins = require('postcss-mixins'),
 gulp_watch = require('gulp-watch'),
-gulp = require('gulp'),
-browser_sync = require('browser-sync').create();
+hexrgba = require("postcss-hexrgba"),
+gulp = require('gulp');
 
 gulp.task("watch", function() {
     /*
@@ -36,7 +36,7 @@ gulp.task("styles", function() {
     console.log("Watching stylesheets...");
 
     return gulp.src("./public/assets/styles/style.css")
-        .pipe(postcss([postcss_import, postcss_mixins, postcss_simpleVars, postcss_nested, autoprefixer]))
+        .pipe(postcss([postcss_import, postcss_mixins, postcss_simpleVars, postcss_nested, hexrgba, autoprefixer]))
         .on("error", function(errorInfo){
             console.log(errorInfo.toString());
             this.emit("end");

@@ -16,6 +16,13 @@
         padding: 5px;
         min-width: 80%;
         margin-top: 60px;
+
+
+    }
+    &--on-hover:hover {
+        @mixin normalScreen {
+            background-color: rgba($mainRed,.90);
+        }
     }
 
 }
