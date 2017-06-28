@@ -29,7 +29,7 @@
             <form id="form_pinger" method="post">
                 <div class="input-data">
                     <label for="ip" class="input-data__label">Ip</label>
-                    <input class="input-data__text" type="text" name="ip" id="ip" placeholder='xxx.xxx.xxx.xxx' /> <!-- http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
+                    <input class="input-data__text ip_address" type="text" name="ip" id="ip" placeholder='xxx.xxx.xxx.xxx' /> <!-- http://igorescobar.github.io/jQuery-Mask-Plugin/ -->
                 </div>
                 <span class="input-data__alt">or</span>
                 <div class="input-data">
@@ -65,11 +65,22 @@
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv2R8JnxDrhLXHs_-KKL__KQj0j5IOEUE"
     async defer></script>
 
 <script>
 $(document).ready( function(){
+    //ip mask
+    $('.ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
+        translation: {
+            'Z': {
+                pattern: /[0-9]/, optional: true
+            }
+        }
+    });
+
+
     loadingAnimation();
 
     //block button
