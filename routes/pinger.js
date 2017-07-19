@@ -160,6 +160,18 @@ function stripHTTP(str){
 }
 
 
+function validateHostname(hostname){
+    var pattern_hostname = /_(^|[\s.:;?\-\]<\(])(https?://[-\w;/?:@&=+$\|\_.!~*\|'()\[\]%#,☺]+[\w/#](\(\))?)(?=$|[\s',\|\(\).:;?\-\[\]>\)])_i/g;
+
+    rm = hostname.match(pattern_hostname);
+    if(!rm) return false;
+    return true;
+}
+
+function validateIp(ip) {
+    return is_ip(ip);
+}
+
 
 var Pinger = module.exports = {};
 

@@ -4,6 +4,7 @@ var url = require("url");
 var fs = require('fs');
 var path = require('path');
 var qs = require('querystring');
+var is_ip = require('is-ip');
 
 var Pinger = require('./routes/pinger');
 
@@ -89,13 +90,7 @@ function getClientIp(req){
 
     return ipAddr.slice(rm+1, ipAddr.length);
 }
-/*
-function stripIp(ipAddr){
-    var ip_pattern = /\d\d\d.\d\d\d.\d\d\d.\d\d\d/i;
-    rm = str.match(http_pattern);
-    if(!rm) return str;
-    return (str.slice(rm[0].length, str.length));
-}*/
+
 
 
 app.use('/', server);
