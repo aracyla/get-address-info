@@ -15,7 +15,7 @@ var isHostAlive = function (host_ip, f_cb){
     }
 
     var req = http.get({host: host_ip}, function(c){
-        console.log(c.statusCode);
+        //console.log(c.statusCode);
         f_cb(true);
     }).on('error', function(e){
         f_cb(false);
@@ -48,7 +48,6 @@ address = {ip: value, hostname: value}
 */
 var pinger_exe = function (address, res){
     res.writeHead(200, {"Content-type": 'application/json'});
-    console.log("=>pinger mainApp:");
     console.log("------Ip: "+address.ip);
     console.log("------Hostname: "+address.hostname);
 
@@ -68,7 +67,7 @@ var pinger_exe = function (address, res){
                 JSON_georesponse = mount_JSONGeoResponse(address.ip);
                 //NOT FOUNG GEO INFO - MOUNT NOT FOUND RESPONSE
                 if(!JSON_georesponse){
-                    console.log(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hostname:false, "ip": address.ip?address.ip:false}));
+                    console.log("------Json_response: "+JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hostname:false, "ip": address.ip?address.ip:false}));
                     res.write(JSON.stringify({isAlive: false ,"hostname": address.hostname?address.hostname:false, "ip": address.ip?address.ip:false}));
                     res.end();
                 }
@@ -92,7 +91,7 @@ var pinger_exe = function (address, res){
             //IF A VALID IP
             if(ip) {
                 isHostAlive(ip, function(isAlive){
-                    console.log("isAlive: "+isAlive);
+                    console.log("------isAlive: "+isAlive);
                     //CHECK IF IP IS ALIVE AND IF TRUE MOUNT JSONRESPONSE
                     if(isAlive){
                         mount_JSONResponse(address, res);
@@ -120,21 +119,22 @@ function mount_JSONResponse(address, res){
     var JSON_response = {};
     JSON_response["isAlive"] = true;
     //res.write(JSON.stringify({isAlive: true}));
-    console.log("=>pinger mountingJsonResponse: ");
+
     if(address.ip){
-        console.log("------JSON_ip: "+address.ip);
         JSON_response["ip"] = address.ip;
         JSON_response["geo"] = mount_JSONGeoResponse(address.ip);
         res.end(JSON.stringify(JSON_response));
+        console.log("------Json_response{"+JSON.stringify(JSON_response)+"}");
     }
     else{
         hostnameToIp(address.hostname, function(ip, family){
-            console.log("------JSON_ip: "+ip);
             JSON_response["ip"] = ip;
             JSON_response["geo"] = mount_JSONGeoResponse(ip);
             res.end(JSON.stringify(JSON_response));
+            console.log("------Json_response: "+JSON.stringify(JSON_response));
         });
     }
+
 }
 function mount_JSONGeoResponse(ip) {
     var JSON_georesponse = {};
@@ -150,26 +150,11 @@ function mount_JSONGeoResponse(ip) {
     return JSON_georesponse;
 }
 
-
-
 function stripHTTP(str){
     var http_pattern = /http:\/\//i;
     rm = str.match(http_pattern);
     if(!rm) return str;
     return (str.slice(rm[0].length, str.length));
-}
-
-
-function validateHostname(hostname){
-    var pattern_hostname = /_(^|[\s.:;?\-\]<\(])(https?://[-\w;/?:@&=+$\|\_.!~*\|'()\[\]%#,☺]+[\w/#](\(\))?)(?=$|[\s',\|\(\).:;?\-\[\]>\)])_i/g;
-
-    rm = hostname.match(pattern_hostname);
-    if(!rm) return false;
-    return true;
-}
-
-function validateIp(ip) {
-    return is_ip(ip);
 }
 
 

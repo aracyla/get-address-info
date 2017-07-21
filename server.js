@@ -14,7 +14,6 @@ var app = connect();
 var mainRoute_file = "pinger.html"
 
 var server = function (req, res){
-    console.log(req.url)
     switch (req.url) {
         case "/favicon.ico":
         break;
@@ -24,7 +23,6 @@ var server = function (req, res){
         break;
 
         case "/pinger":
-            console.log("=>pinger route");
 
             if(req.method == 'POST'){
                 var body = "";
@@ -59,7 +57,7 @@ function HTTP_SendFile(res, req, basepath){
         if(path.extname(req.url) == ".css")
             filepath = basepath+"temp/styles/style.css";
 
-    console.log(filepath);
+    //console.log(filepath);
 
     switch (path.extname(req.url)) {
             case ".css":
