@@ -1,0 +1,46 @@
+.response-layer {
+    position: absolute;
+    top: 80px;
+    left: 10%;
+    background-color: white;
+    width: 80%;
+    height: 80%;
+    border: 2px solid gray;
+    border-radius: 20px;
+    opacity: 0;
+    transition: all .8s ease-out;
+    z-index: -1;
+
+    &__close-x {
+        @mixin clearfix;
+        float: right;
+        margin-right: 14px;
+        margin-top: 6px;
+        font-weight: 800;
+        font-size: 2rem;
+
+    }
+
+    &__close-x:hover{
+        cursor: pointer;
+    }
+
+    &__text-area {
+        position: relative;
+        z-index:-1;
+        top: 90px;
+        color: red;
+        font-size: 1.5rem;
+        line-height: .8;
+
+    }
+
+    &__text-area p {
+        text-align: center;
+    }
+
+    &--is-visible {
+        opacity: 1;
+        z-index: 10;
+    }
+}

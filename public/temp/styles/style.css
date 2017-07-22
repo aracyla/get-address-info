@@ -639,3 +639,64 @@ body {
             background-color: rgba(216,38,69,.90)
     }
     }
+
+.response-layer {
+    position: absolute;
+    top: 80px;
+    left: 10%;
+    background-color: white;
+    width: 80%;
+    height: 80%;
+    border: 2px solid gray;
+    border-radius: 20px;
+    opacity: 0;
+    -webkit-transition: all .8s ease-out;
+    transition: all .8s ease-out;
+    z-index: -1;
+}
+
+.response-layer__close-x {
+        float: right;
+        margin-right: 14px;
+        margin-top: 6px;
+        font-weight: 800;
+        font-size: 2rem;
+
+    }
+
+.response-layer__close-x:before {
+        content: "";
+        display: table;
+    }
+
+.response-layer__close-x:after {
+        content: "";
+        display: table;
+    }
+
+.response-layer__close-x:after {
+        clear: both;
+    }
+
+.response-layer__close-x:hover{
+        cursor: pointer;
+    }
+
+.response-layer__text-area {
+        position: relative;
+        z-index:-1;
+        top: 90px;
+        color: red;
+        font-size: 1.5rem;
+        line-height: .8;
+
+    }
+
+.response-layer__text-area p {
+        text-align: center;
+    }
+
+.response-layer--is-visible {
+        opacity: 1;
+        z-index: 10;
+    }

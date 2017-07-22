@@ -42,18 +42,19 @@
             <div class="loading_area clear_float" id='loading_area'>
                 <div class="loading_ball" id='loading_ball'></div>
             </div>
+
         </div>
 
-        <div class="response_area clear_float">
-            <div class="hidden_layer">
-                <div class="response_area_txt" id="response_area_txt"></div>
-                <div id="map" class="map_style"></div>
+            <div class="response-layer">
+                <div class="response-layer__close-x">X</div><br />
+                <div class="response-layer__text-area" id="response_area_txt"></div>
 
-                </div>
             </div>
-        </div>
-        <!---->
+
+        <div id="map" class="map_style"></div>
     </div>
+
+        <!---->
 </div>
 
 
@@ -70,20 +71,6 @@
     async defer></script>
 
 <script>
-
-function loadingAnimation(){
-    $('.loading_ball').css("animation", "loadingAnimation 1s");//turn off animation
-    $('.loading_ball').css("animation-fill-mode", "forwards");
-    $('.loading_ball').css("animation-iteration-count", "infinite");
-    $('.loading_ball').css("animation-direction", "alternate");
-    $('.loading_ball').css("animation-timing-function", "linear");
-
-    $('#loading_ball').fadeIn("slow");
-
-
-}
-
-
 $(document).ready( function(){
     //ip mask
     $('.ip_address').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
@@ -94,13 +81,6 @@ $(document).ready( function(){
         }
     });
 
-
-    loadingAnimation();
-
-    //block button
-    $("#ping_button").prop("disabled",true);
-    $('#ping_button').css("cursor", "progress");
-    $('#response_area_txt').hide();
 
     $.ajax({
          url: '/pageload',
@@ -115,25 +95,17 @@ $(document).ready( function(){
                  data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
                  data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
                  data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
-
-                 $('#map').show();
-                 initMap(response.geo.lat, response.geo.lon, response.geo.city);
              }
              else{
-                 data = '<p><span class="response_font"><b>Status</b>: Offline<br />Address "'+(response.ip?response.ip:response.hostname)+'"<br /> not found</span>';
+                 data = '<p><b>Status:</b> Offline</p><p>Address: "'+(response.ip?response.ip:response.hostname)+'"</p><p>Not found</p>';
              }
-
+             var mapLayer = new Layer();
              $('#response_area_txt').html(data);
-             $('#loading_ball').fadeOut("slow", function(){
-                 $('.loading_ball').css("animation", "0");//turn off animation
-             });
-
-             $('.hidden_layer').show();
 
 
              //delay to not allow multiple requests
-             $("#ping_button").delay(1000).prop("disabled",false);
-             $("#ping_button").css("cursor", "default");
+             //$("#ping_button").delay(1000).prop("disabled",false);
+             //$("#ping_button").css("cursor", "default");
          }
      });
 });
@@ -148,15 +120,12 @@ $($('#form_pinger').on('submit', function(event){
     else {
         if($('#hostname').val() != "")
             address = {hostname: $('#hostname').val()};
-
-        alert("Complete the form!");
-        return;
+        else {
+            alert("Complete the form!");
+            return;
+        }
     }
-    loadingAnimation();
 
-    //block button
-     $("#ping_button").prop("disabled",true);
-     $('#ping_button').css("cursor", "progress");
 
     $.ajax({
         url: '/pinger',
@@ -173,24 +142,20 @@ $($('#form_pinger').on('submit', function(event){
                 data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
                 data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
 
-                $('#map').show();
-                initMap(response.geo.lat, response.geo.lon, response.geo.city);
+
+                //initMap(response.geo.lat, response.geo.lon, response.geo.city);
             }
             else{
                 data = '<p><span class="response_font"><b>Status</b>: Offline<br />Address not found</span>';
             }
-
+            var mapLayer = new Layer();
             $('#response_area_txt').html(data);
-            $('#loading_ball').fadeOut("slow", function(){
-                $('.loading_ball').css("animation", "0");//turn off animation
-            });
 
-            $('.hidden_layer').show();
-
-
+/*
             //delay to not allow multiple requests
             $("#ping_button").delay(1000).prop("disabled",false);
             $("#ping_button").css("cursor", "default");
+            */
         }
     });
 }));
@@ -198,6 +163,7 @@ $($('#form_pinger').on('submit', function(event){
 
 </script>
 <script>
+
     function initMap(lat, lon, city) {
         var opts = {
             center: {lat: lat, lng: lon},
@@ -211,11 +177,32 @@ $($('#form_pinger').on('submit', function(event){
             title: city
         });
 
+        alert();
+    }
+
+    class Layer {
+        constructor(){
+            this.responseLayer = $(".response-layer");
+            this.responseLayerCloseX = $(".response-layer__close-x");
+            this.map = $("#map");
+
+            this.events();
+            this.toggleLayer();
+        }
+
+        events() {
+            this.responseLayerCloseX.click(() => this.toggleLayer());
+
+        }
+
+        toggleLayer(){
+            this.responseLayer.toggleClass("response-layer--is-visible");
+        }
 
     }
 
-</script>
 
+</script>
 
 </body>
 
