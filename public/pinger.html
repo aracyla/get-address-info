@@ -10,7 +10,14 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="" />
-
+    <style>
+    #map {
+        height: 400px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    </style>
 
 </head>
 
@@ -48,10 +55,10 @@
             <div class="response-layer">
                 <div class="response-layer__close-x">X</div><br />
                 <div class="response-layer__text-area" id="response_area_txt"></div>
-
+                <div id="map" class="map_style"></div>
             </div>
 
-        <div id="map" class="map_style"></div>
+
     </div>
 
         <!---->
@@ -82,6 +89,8 @@ $(document).ready( function(){
     });
 
 
+
+
     $.ajax({
          url: '/pageload',
          method: 'POST',
@@ -101,6 +110,7 @@ $(document).ready( function(){
              }
              var mapLayer = new Layer();
              $('#response_area_txt').html(data);
+
 
 
              //delay to not allow multiple requests
@@ -142,8 +152,7 @@ $($('#form_pinger').on('submit', function(event){
                 data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
                 data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
 
-
-                //initMap(response.geo.lat, response.geo.lon, response.geo.city);
+                initMap(response.geo.lat, response.geo.lon, response.geo.city);
             }
             else{
                 data = '<p><span class="response_font"><b>Status</b>: Offline<br />Address not found</span>';
@@ -177,7 +186,7 @@ $($('#form_pinger').on('submit', function(event){
             title: city
         });
 
-        alert();
+
     }
 
     class Layer {
@@ -203,7 +212,29 @@ $($('#form_pinger').on('submit', function(event){
 
 
 </script>
+<div id="bla"></div>
 
+<script>
+/*
+      function test() {
+
+        var uluru = {lat: -25.363, lng: 131.044};
+        alert();
+
+        var map = new google.maps.Map(document.getElementById('bla'), {
+          zoom: 4,
+          center: uluru
+        });
+        alert();
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+
+        alert();
+      }
+*/
+</script>
 </body>
 
 </html>
