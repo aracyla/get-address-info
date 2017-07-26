@@ -653,29 +653,18 @@ body {
     -webkit-transition: all .8s ease-out;
     transition: all .8s ease-out;
     z-index: -1;
+
+
 }
 
 .response-layer__close-x {
-        float: right;
-        margin-right: 14px;
-        margin-top: 6px;
+        position: absolute;
+        right: 15px;
+        top: 8px;
         font-weight: 800;
         font-size: 2rem;
+        z-index:10px;
 
-    }
-
-.response-layer__close-x:before {
-        content: "";
-        display: table;
-    }
-
-.response-layer__close-x:after {
-        content: "";
-        display: table;
-    }
-
-.response-layer__close-x:after {
-        clear: both;
     }
 
 .response-layer__close-x:hover{
@@ -683,17 +672,34 @@ body {
     }
 
 .response-layer__text-area {
-        position: relative;
-        z-index:-1;
-        top: 90px;
-        color: red;
-        font-size: 1.5rem;
-        line-height: .8;
-
+        z-index: -1;
+        float: left;
+        width: 30%;
+        font-size: 1.2rem;
+        height: 350px;
+        padding-top: 87px;
     }
+
+.response-layer__text-area--no-response {
+            width: 100%;
+            position: relative;
+            z-index:-1;
+            top: -40px;
+            color: red;
+            font-size: 1.5rem;
+            line-height: .8;
+            margin-left: 40px;
+
+        }
 
 .response-layer__text-area p {
         text-align: center;
+    }
+
+.response-layer__response-area {
+        width: 100%;
+        margin-top: 120px;
+        padding-right: 80px;
     }
 
 .response-layer--is-visible {

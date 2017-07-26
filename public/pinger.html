@@ -12,10 +12,13 @@
     <meta name="author" content="" />
     <style>
     #map {
-        height: 400px;
-        width: 80%;
+        height: 420px;
+        width: 70%;
         margin-left: auto;
         margin-right: auto;
+
+        border-radius: 5px;
+        border: 1px solid gray;
     }
     </style>
 
@@ -53,9 +56,11 @@
         </div>
 
             <div class="response-layer">
-                <div class="response-layer__close-x">X</div><br />
-                <div class="response-layer__text-area" id="response_area_txt"></div>
-                <div id="map" class="map_style"></div>
+                <div class="response-layer__close-x">X</div>
+                <div class="response-layer__response-area">
+                    <div class="response-layer__text-area" id="response_area_txt"></div>
+                    <div id="map" class="map_style"></div>
+                </div>
             </div>
 
 
@@ -88,6 +93,8 @@ $(document).ready( function(){
         }
     });
 
+    $("#map").hide();
+
 
 
 
@@ -104,9 +111,12 @@ $(document).ready( function(){
                  data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
                  data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
                  data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
+
+                 $(".response-layer__text-area").removeClass("response-layer__text-area--no-response");
              }
              else{
                  data = '<p><b>Status:</b> Offline</p><p>Address: "'+(response.ip?response.ip:response.hostname)+'"</p><p>Not found</p>';
+                 $(".response-layer__text-area").addClass("response-layer__text-area--no-response");
              }
              var mapLayer = new Layer();
              $('#response_area_txt').html(data);
@@ -147,18 +157,22 @@ $($('#form_pinger').on('submit', function(event){
             console.log(response);
             var data = "";
             if(response.isAlive){
-                data = '<p><span class="response_font"><b>Status</b>: <span class="'+(response.isAlive=="undefined"?"":"response_online")+'">'+(response.isAlive=="undefined"?"Undefined":"Online")+'</span></span><br />';
-                data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
-                data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
-                data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
+                data = '<p><b>Status</b>:'+(response.isAlive=="undefined"?"Undefined":"Online")+'</p>';
+                data = data+'<p><b>Ip</b>: '+response.ip+'</p>';
+                data = data+'<p><b>Country</b>: '+response.geo.country+'</p>';
+                data = data+'<p><b>City</b>: '+response.geo.city+'</p>';
 
+                $(".response-layer__text-area").removeClass("response-layer__text-area--no-response");
+                $("#map").show();
                 initMap(response.geo.lat, response.geo.lon, response.geo.city);
             }
             else{
-                data = '<p><span class="response_font"><b>Status</b>: Offline<br />Address not found</span>';
+                data = '<p><b>Status:</b> Offline</p><p>Address: "'+(response.ip?response.ip:response.hostname)+'"</p><p>Not found</p>';
+                $(".response-layer__text-area").addClass("response-layer__text-area--no-response");
             }
             var mapLayer = new Layer();
             $('#response_area_txt').html(data);
+            //alert();
 
 /*
             //delay to not allow multiple requests
@@ -205,6 +219,7 @@ $($('#form_pinger').on('submit', function(event){
         }
 
         toggleLayer(){
+            //alert("toggle");
             this.responseLayer.toggleClass("response-layer--is-visible");
         }
 
@@ -212,29 +227,7 @@ $($('#form_pinger').on('submit', function(event){
 
 
 </script>
-<div id="bla"></div>
 
-<script>
-/*
-      function test() {
-
-        var uluru = {lat: -25.363, lng: 131.044};
-        alert();
-
-        var map = new google.maps.Map(document.getElementById('bla'), {
-          zoom: 4,
-          center: uluru
-        });
-        alert();
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-
-        alert();
-      }
-*/
-</script>
 </body>
 
 </html>
