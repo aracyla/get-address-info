@@ -1,0 +1,66 @@
+.response-layer {
+    position: absolute;
+    top: 80px;
+    left: 10%;
+    background-color: white;
+    width: 80%;
+    height: 80%;
+    border: 2px solid gray;
+    border-radius: 20px;
+    opacity: 0;
+    transition: all .8s ease-out;
+    z-index: -1;
+
+    &__close-x {
+        position: absolute;
+        right: 15px;
+        top: 8px;
+        font-weight: 800;
+        font-size: 2rem;
+        z-index:10px;
+
+    }
+
+    &__close-x:hover{
+        cursor: pointer;
+    }
+
+    &__text-area {
+        z-index: -1;
+        float: left;
+        width: 30%;
+        font-size: 1.2rem;
+        height: 350px;
+        padding-top: 87px;
+
+        &--no-response {
+            width: 100%;
+            position: relative;
+            z-index:-1;
+            top: -40px;
+            color: red;
+            font-size: 1.5rem;
+            line-height: .8;
+            margin-left: 40px;
+
+        }
+    }
+
+    &__text-area p {
+        text-align: center;
+    }
+
+
+    &__response-area {
+        width: 100%;
+        margin-top: 120px;
+        padding-right: 80px;
+    }
+
+    &--is-visible {
+        opacity: 1;
+        z-index: 10;
+    }
+
+
+}
