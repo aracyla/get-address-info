@@ -94,6 +94,7 @@ $(document).ready( function(){
     });
 
     $("#map").hide();
+    mapLayer.toggleLayer();
 
 
 
@@ -107,20 +108,22 @@ $(document).ready( function(){
              console.log(response);
              var data = "";
              if(response.isAlive){
-                 data = '<p><span class="response_font"><b>Status</b>: <span class="'+(response.isAlive=="undefined"?"":"response_online")+'">'+(response.isAlive=="undefined"?"Undefined":"Online")+'</span></span><br />';
-                 data = data+'<span class="response_font"><b>Ip</b>: '+response.ip+'</span><br /></p><hr />';
-                 data = data+'<p><span class="response_font"><b>Country</b>: '+response.geo.country+'</span><br />';
-                 data = data+'<span class="response_font"><b>City</b>: '+response.geo.city+'</span></p>';
+                 data = '<p><b>Status</b>:'+(response.isAlive=="undefined"?"Undefined":"Online")+'</p>';
+                 data = data+'<p><b>Ip</b>: '+response.ip+'</p>';
+                 data = data+'<p><b>Country</b>: '+response.geo.country+'</p>';
+                 data = data+'<p><b>City</b>: '+response.geo.city+'</p>';
 
                  $(".response-layer__text-area").removeClass("response-layer__text-area--no-response");
+                 $("#map").show();
+                 initMap(response.geo.lat, response.geo.lon, response.geo.city);
              }
              else{
+                 $("#map").hide();
                  data = '<p><b>Status:</b> Offline</p><p>Address: "'+(response.ip?response.ip:response.hostname)+'"</p><p>Not found</p>';
                  $(".response-layer__text-area").addClass("response-layer__text-area--no-response");
              }
-             var mapLayer = new Layer();
-             $('#response_area_txt').html(data);
 
+             $('#response_area_txt').html(data);
 
 
              //delay to not allow multiple requests
@@ -146,6 +149,8 @@ $($('#form_pinger').on('submit', function(event){
         }
     }
 
+    mapLayer.toggleLayer();
+
 
     $.ajax({
         url: '/pinger',
@@ -167,11 +172,13 @@ $($('#form_pinger').on('submit', function(event){
                 initMap(response.geo.lat, response.geo.lon, response.geo.city);
             }
             else{
+                $("#map").hide();
                 data = '<p><b>Status:</b> Offline</p><p>Address: "'+(response.ip?response.ip:response.hostname)+'"</p><p>Not found</p>';
                 $(".response-layer__text-area").addClass("response-layer__text-area--no-response");
             }
-            var mapLayer = new Layer();
+
             $('#response_area_txt').html(data);
+
             //alert();
 
 /*
@@ -210,20 +217,18 @@ $($('#form_pinger').on('submit', function(event){
             this.map = $("#map");
 
             this.events();
-            this.toggleLayer();
         }
 
         events() {
             this.responseLayerCloseX.click(() => this.toggleLayer());
-
         }
 
         toggleLayer(){
-            //alert("toggle");
             this.responseLayer.toggleClass("response-layer--is-visible");
         }
 
     }
+    var mapLayer = new Layer();
 
 
 </script>
