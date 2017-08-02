@@ -114,7 +114,8 @@ a {
 abbr[title] {
   border-bottom: none; /* 1 */
   text-decoration: underline; /* 2 */
-  text-decoration: underline dotted; /* 2 */
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted; /* 2 */
 }
 
 /**
@@ -677,7 +678,7 @@ body {
         width: 30%;
         font-size: 1.2rem;
         height: 350px;
-        padding-top: 87px;
+        padding-top: 37px;
     }
 
 .response-layer__text-area--no-response {

@@ -8,7 +8,8 @@
   "dependencies": {
     "connect": "3.5.1",
     "geoip-lite": "1.1.9",
-    "is-ip": "^2.0.0"
+    "is-ip": "^2.0.0",
+    "normalize.css": "^7.0.0"
   },
   "author": "aracytopterm",
   "license": "ISC",
