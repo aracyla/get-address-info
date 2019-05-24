@@ -1,6 +1,6 @@
 ## *GetAddressInfo*
 
-* getAddressInfo is a simple app created to localize IP or hostname geographically;
+* getAddressInfo is study project that localize IP or hostname geographically;
 
 * It uses a simple geo-ip API;
 
